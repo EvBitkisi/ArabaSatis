@@ -1,0 +1,71 @@
+﻿@model EntityLayer.Entities.User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Modern Login Page | AsmrProg</title>
+    <link rel="stylesheet" href="/accounts/style.css" />
+    <link rel="stylesheet" href="/accounts/Login.html" />
+    <script href="/accounts/script.js"></script>
+</head>
+
+<body>
+
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form asp-action="Register" method="post">
+                <h1>Hesap Oluştur</h1>
+
+                <span>veya kayıt için e-postanızı kullanın</span>
+                <input asp-for="Name" placeholder="Adınız">
+                <input asp-for="Email" placeholder="e-postanız">
+                <input asp-for="Password" placeholder="Şifreniz">
+                <button type="submit">Kayıt Ol</button>
+            </form>
+        </div>
+        <div class="form-container sign-in">
+            <form asp-action="Login" method="post">
+                <h1>Giriş Yap</h1>
+                <span>veya kayıt için e-postanızı kullanın</span>
+                <input asp-for="Email" placeholder="e-postanız">
+                <input asp-for="Password" placeholder="Şifreniz">
+                <button type="submit">Giriş Yap</button>
+                @if (TempData["LoginErrorMessage"] != null)
+                {
+                    <div id="loginAlert" class="alert alert-danger" role="alert">
+                        @TempData["LoginErrorMessage"]
+                    </div>
+                    <!-- 2 saniye sonra alerti gizle -->
+                    <script>
+                        setTimeout(function () {
+                            document.getElementById('loginAlert').style.display = 'none';
+                        }, 2000);
+                    </script>
+                }
+            </form>
+            
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Tekrar hoşgeldiniz!</h1>
+                    <p>Sitenin tüm özelliklerini kullanmak için giriş yapın </p>
+                    <button class="hidden" id="login">Giriş Yap</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Merhaba!</h1>
+                    <p>Sitenin tüm özelliklerini kullanmak için kayıt olun</p>
+                    <button class="hidden" id="register">Kayıt Ol</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/accounts/script.js"></script>
+</body>
+</html>

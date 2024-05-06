@@ -1,0 +1,29 @@
+﻿@model List<EntityLayer.Entities.CarBrand>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+<h1 class="bg-info my-7 w-100 text-center text-white">Araba Markaları</h1>
+<a class="btn btn-warning" href="/CarBrand/Create"><i class="bi bi-plus-square-fill"></i>Ekle</a>
+<table class="table table-info">
+
+    <tr>
+        <td>Araba Marka ID </td>
+        <td>Araba Marka Adı</td>
+        <td>Araba Tip Özellikleri</td>
+        <td>Düzelt</td>
+        <td>Sil</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.CarBrandId</td>
+            <td>@item.CarBrandName</td>
+            <td>@item.CarBrandDescription</td>
+            <td><a class="btn btn-success" asp-action="Edit" asp-route-id="@item.CarBrandId"><i class="bi bi-pen-fill"></i>Düzelt</a></td>
+            <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.CarBrandId"><i class="bi bi-trash-fill"></i>Sil</a></td>
+        </tr>
+    }
+
+</table>
+

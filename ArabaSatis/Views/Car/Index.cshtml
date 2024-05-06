@@ -1,0 +1,46 @@
+﻿@model List<EntityLayer.Entities.Car>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+<h1 class="bg-info my-7 w-100 text-center text-white">Arabalar</h1>
+<a class="btn btn-warning" href="/Car/Create"><i class="bi bi-plus-square-fill"></i>Ekle</a>
+<table class="table table-info">
+
+    <tr>
+        <td>araba adı</td>
+        <td>araba fiyatı</td>
+        <td>fotografı</td>
+        <td>ozellikleri</td>
+        <td>Beygir Gücü</td>
+        <td>Araba Kmsi</td>
+        <td>koltuk sayısı</td>
+        <td>yılı</td>
+        <td>araba tipi</td>
+        <td>araba markası</td>
+        <td>Düzelt</td>
+        <td>Sil</td>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.CarName</td>
+            <td>@item.CarPrice</td>
+            <td>
+                <img src="/Pictures/@item.CarImage" width="25px" height="25px" />
+            </td>
+            <td>@item.CarDescription</td>
+            <td>@item.CarHp</td>
+            <td>@item.CarKm</td>
+            <td>@item.Seats</td>
+            <td>@item.Years</td>
+            <td>@item.CarType.CarTypeName</td>
+            <td>@item.CarBrand.CarBrandName</td>
+            <td><a class="btn btn-success" asp-action="Edit" asp-route-id="@item.CarId"><i class="bi bi-pen-fill"></i>Duzelt</a></td>
+            <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.CarId"><i class="bi bi-trash-fill"></i>Sil</a></td>
+            @*asp-action="Edit" asp-route="@item.CarId"*@
+        </tr>
+    }
+
+</table>
+

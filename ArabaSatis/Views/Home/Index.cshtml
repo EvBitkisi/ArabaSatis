@@ -1,0 +1,296 @@
+﻿@model List<EntityLayer.Entities.Car>
+@{
+    string Name = Context.Session.GetString("Name");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-6J7kRQsXJ5UU1QEC6av8/+RGzJ6e9MvYgNx/0eEcymg9/F8e+duIkLg7aQbT8p0Z9L7Ji4Ym9CEZ3SlFfM7pXw==" crossorigin="anonymous" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover Efekti</title>
+    <style>
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Mavi ekran */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 123, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+
+            .overlay a {
+                color: #fff;
+                font-size: 20px;
+                font-weight: bold;
+                text-decoration: none; /* Bağlantı alt çizgisini kaldırmak için */
+            }
+
+        .product-card:hover .overlay {
+            opacity: 2;
+        }
+        
+
+    </style>
+
+    <style>
+        .custom-border {
+            border: 3px solid #007bff;
+            height: 250px
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-primary bg-primary">
+        <div class="container px-4 px-lg-5">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+               @* <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#!">All Products</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        </ul>
+                    </li>
+                </ul>*@
+
+
+                @*arama kısmı*@
+                <nav class="navbar navbar-expand-lg navbar-primary bg-primary">
+                    <div class="container px-4 px-lg-5">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <form method="post" action="/Home/Index">
+                                <div class="input-group">
+                                    <input type="text" name="searchString" class="form-control bg-light border-0 small" placeholder="Araba model..."
+                                           aria-label="Search" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" type="submit">
+                                            <i class="bi bi-search">Araba Ara</i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+
+
+                <div class="d-flex">
+                    @if (string.IsNullOrWhiteSpace(Name))
+                    {
+                        <a href="/Account/Index" class="btn btn-outline-light me-2">
+                            <i class="bi bi-person"></i> Giriş Yap
+                        </a>
+                        <!-- Favori butonu -->
+                        <a href="#" class="btn btn-warning me-2" onclick="showLoginAlert()">
+                            <i class="bi bi-star"></i> Favoriler
+                        </a>
+                        <!-- Giriş yapın uyarısı -->
+                        <div id="loginAlert" style="display: none; color: #ff0000; font-size: larger;">
+                            Giriş yapınız!
+                        </div>
+                        <!--uyarıyı göster -->
+                        <script>
+                            function showLoginAlert() {
+                                document.getElementById('loginAlert').style.display = 'inline';
+                                setTimeout(function () {
+                                    document.getElementById('loginAlert').style.display = 'none';
+                                }, 2000);
+                            }
+                        </script>
+
+                    }
+                    else
+                    {
+                        <!-- Çıkış yap butonu -->
+                        <a href="/Account/Logout" class="btn btn-outline-danger me-2">
+                            <i class="bi bi-box-arrow-left"></i> Çıkış Yap
+                        </a>
+
+                        <!-- Favoriler butonu -->
+                        <a href="/Favorite/Index" class="btn btn-warning me-2">
+                            <i class="bi bi-star"></i> Favoriler
+                        </a>
+                    }
+
+                    @if(Name!=null)
+                    {
+                        <button class="btn btn-secondary dropdown-toggle me-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person"></i> @Name
+                        </button>
+                    }
+                    
+
+                    
+
+                    @if (TempData["LogoutMessage"] != null)
+                    {
+                        <div class="alert alert-info" role="alert">
+                            @TempData["LogoutMessage"]
+                        </div>
+
+                        <script>
+                            setTimeout(function () {
+                                window.location.href = "/Home/Index";
+                            }, 3000); // 3 saniye
+                        </script>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </nav>
+    <!-- Header-->
+    <!-- Section-->
+    <section class="py-5" style="background-color: #cce5ff;">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                <div class="col-md-2" style="background-color: #f8f9fa; width:250px; height: 100vh; position: fixed; left: 0; top: 0; overflow-y: auto; padding: 20px;">
+                    <h5>Filtreleme</h5>
+
+                    <!-- Filtreleme Formu -->
+                    <form method="post" action="/Home/Index"  >
+                        <div class="mb-3">
+                            <label for="carBrand" class="form-label" style="color: #0077cc; text-decoration: underline; font-weight: bold;">ARABA MARKASI SEÇİN</label>
+                            @foreach (var group in Model.GroupBy(item => item.CarBrandId))
+                            {
+                                var selectedCar = group.FirstOrDefault();
+                                if (selectedCar != null)
+                                {
+                                    <div class="form-check">
+                                        <input type="checkbox" id="carBrand_@selectedCar.CarBrandId" name="CarBrandIds" value="@selectedCar.CarBrandId" class="form-check-input">
+                                        <label for="carBrand_@selectedCar.CarBrandId" class="form-check-label">@selectedCar.CarBrand.CarBrandName</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="carBrand" class="form-label" style="color: #0077cc; text-decoration: underline; font-weight: bold;">ARABA YILI SEÇİN</label>
+                            @foreach (var year in Model.Select(item => item.Years).Distinct())
+                            {
+                                <div class="form-check">
+                                    <input type="checkbox" id="year_@year" name="SelectedYears" value="@year" class="form-check-input">
+                                    <label for="year_@year" class="form-check-label">@year</label>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="carBrand" class="form-label" style="color: #0077cc; text-decoration: underline; font-weight: bold;">KOLTUK SAYISI SEÇİN</label>
+                            @foreach (var seatCount in Model.Select(item => item.Seats).Distinct())
+                            {
+                                <div class="form-check">
+                                    <input type="checkbox" id="seats_@seatCount" name="SelectedSeats" value="@seatCount" class="form-check-input" />
+                                    <label for="seats_@seatCount" class="form-check-label">@seatCount Koltuk</label>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="SelectedTypes" class="form-label" style="color: #0077cc; text-decoration: underline; font-weight: bold;">ARABA TİPİ SEÇİN</label>
+                            <select id="SelectedTypes" name="SelectedTypes" class="form-select">
+                                <option value="">Tüm Araba Tipleri</option>
+                                 @foreach (var carType in Model.Select(item => item.CarType).Distinct())
+                                 {
+                                     <option value="@carType.CarTypeName">@carType.CarTypeName</option>
+                                 }
+                            </select>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <button class="btn btn-success" type="submit">
+                                <i class="bi bi-search"></i> Araba Ara
+                            </button>
+                        </div>
+                    </form>
+
+                   
+                </div>
+                
+                @if (Model.Any(car => car.CarName.Contains(ViewBag.SearchString ?? "") &&
+                ((ViewBag.SelectedCarBrandIds == null || ViewBag.SelectedCarBrandIds.Count == 0) ||
+                (ViewBag.SelectedCarBrandIds != null && ViewBag.SelectedCarBrandIds.Contains((int)car.CarBrand.CarBrandId)))))
+                {
+                            @foreach (var item in Model.Where(car => car.CarName.Contains(ViewBag.SearchString ?? "") &&
+                           ((ViewBag.SelectedCarBrandIds == null || ViewBag.SelectedCarBrandIds.Count == 0) ||
+                           (ViewBag.SelectedCarBrandIds != null && ViewBag.SelectedCarBrandIds.Contains((int)car.CarBrand.CarBrandId)))))
+                           {
+                                <div class="product-card" onclick="window.location='/Home/Details/@item.CarId';" style="cursor: pointer;">
+                                <div class="card h-130 custom-border">
+                                <!-- Product image-->
+                                <img class="card-img-top" src="/Pictures/@item.CarImage" width="100px" height="140px" />
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">@item.CarName</h5>
+                                        <!-- Product price-->
+                                @item.CarPrice TL
+                                        <div class="overlay">
+                                            <a href="/Home/Details/@item.CarId">Detay Sayfası</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                 </div>
+                                </div>
+                           }
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        Seçilen özelliklere sahip araç bulunamadı.
+                    </div>
+                }
+
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-primary">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
+</html>

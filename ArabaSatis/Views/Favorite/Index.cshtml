@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model List<BusinessLayer.ViewModels.FavoriteCarDetailsViewModel>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-6J7kRQsXJ5UU1QEC6av8/+RGzJ6e9MvYgNx/0eEcymg9/F8e+duIkLg7aQbT8p0Z9L7Ji4Ym9CEZ3SlFfM7pXw==" crossorigin="anonymous" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover Efekti</title>
+    <style>
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Mavi ekran */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 123, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+
+            .overlay a {
+                color: #fff;
+                font-size: 20px;
+                font-weight: bold;
+                text-decoration: none; /* Bağlantı alt çizgisini kaldırmak için */
+            }
+
+        .product-card:hover .overlay {
+            opacity: 2;
+        }
+    </style>
+
+    <style>
+        .custom-border {
+            border: 3px solid #007bff;
+            height: 250px
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-primary bg-primary">
+        <div class="container px-4 px-lg-5">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                
+                <div class="d-flex">
+                    <div class="container px-4 px-lg-5">
+                        <div class="input-group-append">
+                            <a href="/Home/Index" class="btn btn-primary" style="background-color: #004080; color: white; text-decoration: none;">
+                                <i class="bi bi-arrow-left-circle"></i> Geri Git
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div style="background-color: gold; padding: 8px 20px; display: inline-block; border-radius: 20px; margin-top: 20px; margin-bottom: 10px;">
+                    <h2 class="navbar-text mx-3" style="color: darkgoldenrod; font-size: 24px; margin: 0;">Favoriler</h2>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </nav>
+    <!-- Header-->
+    <!-- Section-->
+    <section class="py-5" style="background-color: #cce5ff;">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                @if (Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="product-card" onclick="window.location='/Home/Details/@item.Car.CarId';" style="cursor: pointer;">
+                            <div class="card h-130 custom-border">
+                                <!-- Product image-->
+                                <img class="card-img-top" src="/Pictures/@item.Car.CarImage" width="100px" height="140px" />
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">@item.Car.CarName</h5>
+                                        <!-- Product price-->
+                                @item.Car.CarPrice TL
+                                        <div class="overlay">
+                                            <a href="/Home/Details/@item.Car.CarId">Detay Sayfası</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        Favorilerde araba bulunamadı.
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-primary">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
+</html>

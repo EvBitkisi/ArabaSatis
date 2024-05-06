@@ -1,0 +1,96 @@
+﻿@model EntityLayer.Entities.Car
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<h1 class="bg-info my-7 w-100 text-center text-white">Yeni Araba</h1>
+
+<form action="Create" method="post" enctype="multipart/form-data">
+
+    <div class="form-group row">
+        <label for="text4" class="col-4 col-form-label">Araba Marka Id</label>
+        <div class="col-8">
+            <input id="text4" asp-for="CarBrandId" type="text" class="form-control">
+            <span asp-validation-for="CarBrandId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="text4" class="col-4 col-form-label">Araba Tipi Id</label>
+        <div class="col-8">
+            <input id="text4" asp-for="CarTypeId" type="text" class="form-control">
+            <span asp-validation-for="CarTypeId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="text" class="col-4 col-form-label">Araba Adı</label>
+        <div class="col-8">
+            <input id="text" asp-for="CarName"  type="text" class="form-control">
+            <span asp-validation-for="CarName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="text1" class="col-4 col-form-label">Fiyatı</label>
+        <div class="col-8">
+            <input id="text1" asp-for="CarPrice"  type="text" class="form-control">
+            <span asp-validation-for="CarPrice" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="text1" class="col-4 col-form-label">Fotoğrafı</label>
+        <div class="col-8">
+            <label asp-for="CarImage" class="col-4 col-form-label"></label>
+            <input asp-for="ImageUpload" multiple type="file" >
+            <span asp-validation-for="ImageUpload"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="text2" class="col-4 col-form-label">Özellikleri</label>
+        <div class="col-8">
+            <input id="text2" asp-for="CarDescription"  type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="text" class="col-4 col-form-label">Beygir Gücü</label>
+        <div class="col-8">
+            <input id="text" asp-for="CarHp" type="text" class="form-control">
+            <span asp-validation-for="CarHp" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="text" class="col-4 col-form-label">Araba Kmsi</label>
+        <div class="col-8">
+            <input id="text" asp-for="CarKm" type="text" class="form-control">
+            <span asp-validation-for="CarKm" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="text3" class="col-4 col-form-label">Koltuk Sayısı</label>
+        <div class="col-8">
+            <input id="text3" asp-for="Seats"  type="text" class="form-control">
+            <span asp-validation-for="Seats" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="text4" class="col-4 col-form-label">Üretim Yılı</label>
+        <div class="col-8">
+            <input id="text4" asp-for="Years"  type="text" class="form-control">
+            <span asp-validation-for="Years" class="text-danger"></span>
+        </div>
+    </div>
+    
+    
+    <div class="form-group row">
+        <div class="offset-4 col-8">
+            <button name="submit" type="submit" class="btn btn-primary">Kaydet</button>
+        </div>
+    </div>
+</form>
